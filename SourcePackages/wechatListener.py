@@ -99,11 +99,16 @@ def wechat_init(msg: MessageInfo):
                             "name": "今日积分",
                             "key": "MENU_SCORE"
                         },
-                    {
+                        {
                             "type": "click",
                             "name": "账号编码",
                             "key": "MENU_OPENID"
-                            },
+                        },
+                        {
+                            "type": "click",
+                            "name": "已用流量",
+                            "key": "MENU_VPSSTATUS"
+                        }
                 ]
             }
         ]
@@ -266,6 +271,8 @@ def weixinInterface():
                     MyThread("wechat_learn", wechat_learn, msg).start()
                 if msg.event_key == "MENU_SCORE":
                     MyThread("wechat_get_score", wechat_get_score, msg).start()
+                if msg.event_key == "MENU_VPSSTATUS":
+                    return msg.returnXml(vps.get_status())
             if msg.from_user_name == openid:
                 if msg.content.startswith("/init"):
                     return wechat_init(msg)
